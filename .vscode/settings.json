@@ -1,0 +1,12 @@
+{
+  "css.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.validate": true,
+  "files.exclude": {
+    ".cache": true,
+    "node_modules": true,
+    "public": true
+  }
+}

@@ -1,24 +1,20 @@
 import { ParentSpanPluginArgs, PluginOptions, PluginCallback } from "gatsby";
-// import { loadDocuments } from 'graphql-toolkit';
 import { codegen } from "@graphql-codegen/core";
-import * as fs from "fs-extra";
-// import * as glob from 'glob';
-
 import { plugin as typescriptPlugin } from "@graphql-codegen/typescript";
 import { plugin as operationsPlugin } from "@graphql-codegen/typescript-operations";
-
-import { IntrospectionQuery } from "graphql";
-const {
-  introspectionQuery,
-  graphql,
+import {
   buildClientSchema,
+  getIntrospectionQuery,
+  graphql,
+  IntrospectionQuery,
   parse,
-  printSchema
-} = require("gatsby/graphql");
+  printSchema,
+} from "graphql";
+import { writeFileSync } from "fs";
 
-const path = require("path");
+import { resolve } from "path";
 
-const defaultLocation = path.resolve(process.cwd(), "graphql-types.d.ts");
+const defaultLocation = resolve(process.cwd(), "graphql-types.d.ts");
 
 exports.onPostBootstrap = async (
   args: ParentSpanPluginArgs,
@@ -31,34 +27,7 @@ exports.onPostBootstrap = async (
   // get the schema and load all graphql queries from pages
   const { schema } = store.getState();
 
-  // automatic typings for queries disabled atm
-  // const { schema, program } = store.getState();
-  // const { directory } = program;
-  // const docFiles: String[] = [];
-  // docFiles.push(
-  //  ...glob
-  //    .sync('./src/**/*.{ts,tsx}', {})
-  //    .filter(fileName => fileName.indexOf('.test') < 0)
-  // );
-  // docFiles.push(
-  //  ...glob
-  //    .sync('./.cache/fragments/*.js', {})
-  //    .filter(fileName => fileName.indexOf('.test') < 0)
-  // );
-
-  // const docPromises = docFiles.map(async docGlob => {
-  //  const _docGlob = path.join(directory, docGlob);
-  //  try {
-  //    const doc = await loadDocuments(_docGlob, {});
-  //    return doc;
-  //  } catch (e) {
-  //    reporter.error('error when trying to parse schema, ignoring', e);
-  //    return Promise.resolve([]);
-  //  }
-  // });
-  // const results = await Promise.all(docPromises);
-  // const documents = results.reduce((acc, cur) => acc.concat(cur), []);
-
+  const introspectionQuery = getIntrospectionQuery();
   const res = await graphql(schema, introspectionQuery);
   const introspectSchema = res.data as IntrospectionQuery;
   const parsedSchema = parse(printSchema(buildClientSchema(introspectSchema)));
@@ -72,31 +41,31 @@ exports.onPostBootstrap = async (
     schema: parsedSchema,
     pluginMap: {
       typescript: {
-        plugin: typescriptPlugin
+        plugin: typescriptPlugin,
       },
       typescriptOperation: {
-        plugin: operationsPlugin
-      }
+        plugin: operationsPlugin,
+      },
     },
     plugins: [
       {
         typescript: {
           skipTypename: false,
-          enumsAsTypes: true
-        }
+          enumsAsTypes: true,
+        },
       } as any,
       {
         typescriptOperation: {
-          skipTypename: false
-        }
-      } as any
-    ]
+          skipTypename: false,
+        },
+      } as any,
+    ],
   };
 
   const output = await codegen(config);
 
   // write the typings
-  fs.outputFileSync(dest, output);
+  writeFileSync(dest, output);
 
   reporter.info(`[gatsby-plugin-generate-typings] Wrote typings to ${dest}`);
 

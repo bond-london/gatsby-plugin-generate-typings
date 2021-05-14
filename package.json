@@ -16,26 +16,22 @@
     "typings"
   ],
   "scripts": {
-    "build": "tsc -p ./"
+    "build": "tsc -p ./",
+    "watch": "tsc --watch -p ./"
   },
   "license": "ISC",
   "dependencies": {
     "@graphql-codegen/core": "^1.4.0",
-    "@graphql-codegen/introspection": "^1.4.0",
-    "@graphql-codegen/typescript": "^1.4.0",
-    "@graphql-codegen/typescript-operations": "^1.4.0",
-    "@types/graphql": "^14.5.0",
-    "fs-extra": "^8.1.0",
-    "gatsby-node-helpers": "^0.3.0",
-    "graphql": "^14.5.0",
-    "graphql-tag-pluck": "^0.8.3",
-    "graphql-toolkit": "^0.4.0",
-    "ts-node": "^8.3.0"
+    "@graphql-codegen/introspection": "^1.18.2",
+    "@graphql-codegen/typescript": "^1.22.0",
+    "@graphql-codegen/typescript-operations": "^1.17.16"
   },
   "devDependencies": {
-    "@types/fs-extra": "^8.0.0",
-    "@types/node": "^12.6.7",
-    "gatsby": "^2.13.27",
-    "typescript": "^3.5.3"
+    "@types/node": "^12.20.13",
+    "@types/react-dom": "^17.0.5",
+    "gatsby": "^3.5.0"
+  },
+  "peerDependencies": {
+    "typescript": "4.x"
   }
 }
