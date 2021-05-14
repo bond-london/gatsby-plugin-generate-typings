@@ -46,7 +46,7 @@ var defaultLocation = path_1.resolve(process.cwd(), "graphql-types.d.ts");
 exports.onPostBootstrap = function (args, options, callback) {
     if (options === void 0) { options = { plugins: [] }; }
     return __awaiter(void 0, void 0, void 0, function () {
-        var store, reporter, dest, schema, introspectionQuery, res, introspectSchema, parsedSchema, config, output;
+        var store, reporter, dest, schema, introspectionQuery, res, introspectSchema, parsedSchema, config, output, outputDir;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -90,7 +90,8 @@ exports.onPostBootstrap = function (args, options, callback) {
                     return [4 /*yield*/, core_1.codegen(config)];
                 case 2:
                     output = _a.sent();
-                    // write the typings
+                    outputDir = path_1.dirname(dest);
+                    fs_1.mkdirSync(outputDir, { recursive: true });
                     fs_1.writeFileSync(dest, output);
                     reporter.info("[gatsby-plugin-generate-typings] Wrote typings to " + dest);
                     // tell gatsby we are done

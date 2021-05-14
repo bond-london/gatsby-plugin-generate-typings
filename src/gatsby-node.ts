@@ -10,9 +10,9 @@ import {
   parse,
   printSchema,
 } from "graphql";
-import { writeFileSync } from "fs";
+import { writeFileSync, mkdirSync } from "fs";
 
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 
 const defaultLocation = resolve(process.cwd(), "graphql-types.d.ts");
 
@@ -65,6 +65,9 @@ exports.onPostBootstrap = async (
   const output = await codegen(config);
 
   // write the typings
+  const outputDir = dirname(dest);
+  mkdirSync(outputDir, { recursive: true });
+
   writeFileSync(dest, output);
 
   reporter.info(`[gatsby-plugin-generate-typings] Wrote typings to ${dest}`);
