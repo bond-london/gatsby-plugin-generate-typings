@@ -78,11 +78,15 @@ exports.onPostBootstrap = function (args, options, callback) {
                                 typescript: {
                                     skipTypename: false,
                                     enumsAsTypes: true,
+                                    avoidOptionals: false,
+                                    maybeValue: "T",
+                                    immutableTypes: true,
                                 },
                             },
                             {
                                 typescriptOperation: {
                                     skipTypename: false,
+                                    avoidOptionals: false,
                                 },
                             },
                         ],

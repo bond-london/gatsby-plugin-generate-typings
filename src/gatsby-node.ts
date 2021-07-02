@@ -52,11 +52,15 @@ exports.onPostBootstrap = async (
         typescript: {
           skipTypename: false,
           enumsAsTypes: true,
+          avoidOptionals: false,
+          maybeValue: "T",
+          immutableTypes: true,
         },
       } as any,
       {
         typescriptOperation: {
           skipTypename: false,
+          avoidOptionals: false,
         },
       } as any,
     ],

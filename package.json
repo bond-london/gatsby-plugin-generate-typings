@@ -18,9 +18,6 @@
     "codegen",
     "typings"
   ],
-  "config": {
-    "access": "public"
-  },
   "scripts": {
     "build": "tsc -p ./",
     "watch": "tsc --watch -p ./"
