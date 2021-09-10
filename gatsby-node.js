@@ -42,7 +42,7 @@ var typescript_operations_1 = require("@graphql-codegen/typescript-operations");
 var graphql_1 = require("graphql");
 var fs_1 = require("fs");
 var path_1 = require("path");
-var defaultLocation = path_1.resolve(process.cwd(), "graphql-types.d.ts");
+var defaultLocation = (0, path_1.resolve)(process.cwd(), "graphql-types.d.ts");
 exports.onPostBootstrap = function (args, options, callback) {
     if (options === void 0) { options = { plugins: [] }; }
     return __awaiter(void 0, void 0, void 0, function () {
@@ -53,12 +53,12 @@ exports.onPostBootstrap = function (args, options, callback) {
                     store = args.store, reporter = args.reporter;
                     dest = options.dest || defaultLocation;
                     schema = store.getState().schema;
-                    introspectionQuery = graphql_1.getIntrospectionQuery();
-                    return [4 /*yield*/, graphql_1.graphql(schema, introspectionQuery)];
+                    introspectionQuery = (0, graphql_1.getIntrospectionQuery)();
+                    return [4 /*yield*/, (0, graphql_1.graphql)(schema, introspectionQuery)];
                 case 1:
                     res = _a.sent();
                     introspectSchema = res.data;
-                    parsedSchema = graphql_1.parse(graphql_1.printSchema(graphql_1.buildClientSchema(introspectSchema)));
+                    parsedSchema = (0, graphql_1.parse)((0, graphql_1.printSchema)((0, graphql_1.buildClientSchema)(introspectSchema)));
                     config = {
                         // documents,
                         documents: [],
@@ -91,12 +91,12 @@ exports.onPostBootstrap = function (args, options, callback) {
                             },
                         ],
                     };
-                    return [4 /*yield*/, core_1.codegen(config)];
+                    return [4 /*yield*/, (0, core_1.codegen)(config)];
                 case 2:
                     output = _a.sent();
-                    outputDir = path_1.dirname(dest);
-                    fs_1.mkdirSync(outputDir, { recursive: true });
-                    fs_1.writeFileSync(dest, output);
+                    outputDir = (0, path_1.dirname)(dest);
+                    (0, fs_1.mkdirSync)(outputDir, { recursive: true });
+                    (0, fs_1.writeFileSync)(dest, output);
                     reporter.info("[gatsby-plugin-generate-typings] Wrote typings to " + dest);
                     // tell gatsby we are done
                     callback && callback(null);
