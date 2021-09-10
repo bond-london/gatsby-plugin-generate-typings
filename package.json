@@ -1,6 +1,6 @@
 {
   "name": "@bond-london/gatsby-plugin-generate-typings",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Stefan Baur <stefan.baur@neugelb.com>",
   "contributors": [
     "Nick Randell <nick@nickrandell.com>"
